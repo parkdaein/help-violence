@@ -4,1008 +4,591 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Help! Violence!</title>
-
+<title>HELP! VIOLENCE!</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing:border-box; }
 body {
-  margin: 0;
-  padding: 15px;
-  background: #171717;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  user-select: none;
+  margin:0;
+  background:#171923;
+  color:#fff;
+  font-family:Arial,"Malgun Gothic",sans-serif;
+  text-align:center;
+  user-select:none;
 }
-
-#game {
-  max-width: 650px;
-  margin: auto;
-  background: #292929;
-  border: 3px solid #b68a42;
-  border-radius: 18px;
-  padding: 18px;
-  min-height: 600px;
-}
-
-h1 {
-  color: #ffcf65;
-  font-size: 30px;
-  margin: 5px 0;
-}
-
-.subtitle {
-  color: #aaa;
-  font-size: 13px;
-  margin-bottom: 20px;
-}
-
-.status {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-  font-size: 13px;
-}
-
-.status > div {
-  flex: 1;
-  background: #444;
-  padding: 9px;
-  border-radius: 8px;
-}
-
-.bar-area {
-  margin: 12px 0;
-  text-align: left;
-}
-
-.bar-title {
-  font-size: 13px;
-  margin-bottom: 5px;
-}
-
-.bar {
-  height: 15px;
-  background: #555;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  width: 100%;
-  transition: width 0.2s;
-}
-
-#playerBar {
-  background: #36c96b;
-}
-
-#enemyBar {
-  background: #e94d4d;
-}
-
-#scene {
-  min-height: 175px;
-  background: linear-gradient(#555, #252525);
-  border-radius: 12px;
-  margin: 15px 0;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.character {
-  font-size: 75px;
-  line-height: 1.2;
-}
-
-.name {
-  font-size: 23px;
-  font-weight: bold;
-  color: #ffdc85;
-  margin-top: 8px;
-}
-
-.desc {
-  font-size: 14px;
-  color: #ddd;
-  margin-top: 8px;
-  line-height: 1.5;
-}
-
 button {
-  border: none;
-  border-radius: 9px;
-  padding: 13px 15px;
-  margin: 5px;
-  background: #d6a449;
-  color: #20180d;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
+  border:2px solid #aaa;
+  border-radius:12px;
+  padding:13px 20px;
+  font-size:17px;
+  font-weight:bold;
+  color:white;
+  background:#333;
+  cursor:pointer;
+  touch-action:manipulation;
 }
-
-button:active {
-  transform: scale(0.96);
+button:active { transform:scale(.96); }
+button:disabled { opacity:.35; cursor:not-allowed; }
+#game {
+  max-width:900px;
+  min-height:100vh;
+  margin:auto;
+  padding:16px;
+  background:linear-gradient(#30394e,#171923);
+  overflow:hidden;
 }
-
-button:disabled {
-  background: #555;
-  color: #aaa;
-  cursor: not-allowed;
+h1 {
+  color:#ff3434;
+  font-size:clamp(32px,7vw,56px);
+  text-shadow:3px 3px #000;
+  margin:12px 0;
 }
-
-button.red {
-  background: #d94b4b;
-  color: white;
+h2 { color:#ffd34d; }
+.panel {
+  background:#20232d;
+  border:2px solid #737987;
+  border-radius:15px;
+  padding:16px;
+  margin:12px 0;
 }
-
-button.blue {
-  background: #4d91d9;
-  color: white;
+.hidden { display:none !important; }
+.status {
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+  gap:8px;
+  font-size:16px;
+  font-weight:bold;
 }
-
-button.gold {
-  background: #f2c45e;
+.bar {
+  height:17px;
+  background:#555;
+  border:1px solid #aaa;
+  border-radius:20px;
+  overflow:hidden;
+  margin:8px 0;
 }
-
+.fill {
+  height:100%;
+  width:100%;
+  background:#42d879;
+  transition:width .2s;
+}
+.enemyFill { background:#ed4545; }
+.character {
+  width:150px;
+  height:190px;
+  margin:auto;
+  display:block;
+}
+.character.small {
+  width:105px;
+  height:135px;
+}
+.stage-area {
+  min-height:240px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(#566477,#30313a);
+  border-radius:15px;
+  border:2px solid #858b98;
+  margin:15px 0;
+  position:relative;
+}
+.person {
+  width:42%;
+  text-align:center;
+}
+.person p { font-weight:bold; }
+.enemy {
+  font-size:90px;
+  line-height:1.5;
+}
+.chase-area {
+  height:260px;
+  position:relative;
+  background:linear-gradient(#78899a 0%,#4b5964 55%,#554b3c 56%,#39312a 100%);
+  border:3px solid #aaa;
+  border-radius:15px;
+  overflow:hidden;
+  touch-action:none;
+  margin:15px 0;
+}
+.chase-person {
+  position:absolute;
+  bottom:18px;
+  font-size:48px;
+  transform:translateX(-50%);
+}
+#playerChase { left:15%; }
+#enemyChase { left:82%; }
+.gauge {
+  height:30px;
+  background:#151515;
+  border:3px solid #aaa;
+  border-radius:7px;
+  position:relative;
+  overflow:hidden;
+  margin:15px 0;
+}
+.target {
+  position:absolute;
+  top:0;
+  height:100%;
+}
+.goodLeft { left:75%; width:6%; background:#f0c52d; }
+.perfect { left:81%; width:4%; background:#26d75b; }
+.goodRight { left:85%; width:6%; background:#f0c52d; }
+.marker {
+  position:absolute;
+  top:-3px;
+  height:32px;
+  width:5px;
+  background:white;
+  box-shadow:0 0 5px #fff;
+  left:0%;
+  z-index:2;
+}
+.skills {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+}
+.skills button { background:#424b61; }
+.skills button.selected { background:#bd3030; border-color:#fff; }
+.primary {
+  background:#c8202e;
+  border-color:#ff7b7b;
+  font-size:22px;
+  padding:16px 30px;
+}
+.secondary { background:#424b61; }
 #message {
-  min-height: 45px;
-  padding: 10px;
-  background: #3c3c3c;
-  border-radius: 8px;
-  margin: 12px 0;
-  font-size: 14px;
-  line-height: 1.5;
+  min-height:36px;
+  color:#ffdc62;
+  font-weight:bold;
+  font-size:18px;
+  margin:10px;
 }
-
-#skills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
+.reward {
+  color:#ffe45b;
+  font-size:25px;
+  font-weight:bold;
 }
-
-#inventory {
-  margin-top: 12px;
-  padding: 12px;
-  background: #49352e;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-#inventory button {
-  margin: 0;
-}
-
-#sojuCount {
-  font-size: 13px;
-  margin-top: 4px;
-  color: #ffe58a;
-}
-
-#meterArea {
-  margin: 15px 0;
-}
-
-.meter {
-  position: relative;
-  height: 27px;
-  background: #555;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid #aaa;
-}
-
-#perfectZone {
-  position: absolute;
-  left: 70%;
-  width: 20%;
-  height: 100%;
-  background: #31b96b;
-  opacity: 0.9;
-}
-
-#goodZone {
-  position: absolute;
-  left: 35%;
-  width: 35%;
-  height: 100%;
-  background: #e5b83f;
-  opacity: 0.7;
-}
-
-#needle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 5px;
-  height: 100%;
-  background: white;
-  box-shadow: 0 0 5px black;
-}
-
-#chaseArena {
-  position: relative;
-  width: 100%;
-  height: 310px;
-  background:
-    linear-gradient(180deg, #56734c 0%, #6e8b54 60%, #5c4935 60%, #49392a 100%);
-  border: 3px solid #a78b56;
-  border-radius: 12px;
-  overflow: hidden;
-  touch-action: none;
-  margin-top: 15px;
-}
-
-#chaseArena::after {
-  content: "드래그해서 라뎃구를 움직이세요!";
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-  right: 0;
-  color: white;
-  font-size: 12px;
-  text-shadow: 1px 1px 3px black;
-  pointer-events: none;
-}
-
-.runner {
-  position: absolute;
-  font-size: 42px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 2;
-}
-
-#playerRunner {
-  font-size: 48px;
-}
-
-#enemyRunner {
-  font-size: 43px;
-}
-
-.chase-label {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 1px 3px black;
-  pointer-events: none;
-  z-index: 3;
-}
-
-#controls {
-  margin-top: 12px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.small {
-  color: #aaa;
-  font-size: 12px;
-  margin-top: 8px;
-}
-
-@media (max-width: 450px) {
-  body {
-    padding: 6px;
-  }
-
-  #game {
-    padding: 12px;
-  }
-
-  h1 {
-    font-size: 25px;
-  }
-
-  button {
-    padding: 12px 11px;
-    font-size: 13px;
-  }
+@media(max-width:500px) {
+  #game { padding:10px; }
+  .stage-area { min-height:190px; }
+  .enemy { font-size:65px; }
+  .skills button { font-size:15px; padding:12px 5px; }
 }
 </style>
 </head>
-
 <body>
-
 <div id="game">
 
-  <h1>HELP! VIOLENCE!</h1>
-  <div class="subtitle">라뎃구의 정의 구현 프로젝트</div>
-
-  <div class="status">
-    <div id="stageText">STAGE 1</div>
-    <div id="phaseText">준비</div>
-  </div>
-
-  <div class="bar-area">
-    <div class="bar-title">
-      라뎃구 체력 <span id="playerHpText">100 / 100</span>
+  <section id="titleScreen">
+    <h1>HELP! VIOLENCE!</h1>
+    <div class="panel">
+      <svg class="character" viewBox="0 0 150 190">
+        <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+        <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
+        <path d="M58 107 L75 135 L92 107" fill="#d1b89b"/>
+        <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+        <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+        <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+        <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
+        <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4" stroke-linecap="round"/>
+        <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+        <path d="M74 78 L71 86 L77 86" fill="none" stroke="#684535" stroke-width="2"/>
+        <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+        <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+        <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+      </svg>
+      <h2>라뎃구의 귀환</h2>
+      <p>마른 얼굴의 군인 라뎃구가 출동합니다!</p>
+      <p>적을 추격하고 타이밍에 맞춰 공격하세요.</p>
+      <p>스테이지를 클리어하고 소주를 모으세요.</p>
+      <p>각 스테이지 보상은 소주 1병입니다.</p>
     </div>
-    <div class="bar">
-      <div class="bar-fill" id="playerBar"></div>
+    <button class="primary" onclick="startGame()">게임 시작</button>
+  </section>
+
+  <section id="chaseScreen" class="hidden">
+    <h1>HELP! VIOLENCE!</h1>
+    <div class="panel status">
+      <span id="stageLabel">STAGE 1</span>
+      <span>❤️ 체력 <span id="hpText">100</span></span>
+      <span>🍶 소주 <span id="sojuText">0</span>병</span>
     </div>
-  </div>
-
-  <div class="bar-area">
-    <div class="bar-title">
-      적 체력 <span id="enemyHpText">-</span>
-    </div>
-    <div class="bar">
-      <div class="bar-fill" id="enemyBar"></div>
-    </div>
-  </div>
-
-  <div id="scene">
-    <div class="character">🪖</div>
-    <div class="name">라뎃구</div>
-    <div class="desc">학폭근절을 위한 여정이 시작됩니다.</div>
-  </div>
-
-  <div id="message">
-    라뎃구의 여정을 시작해 보세요!
-  </div>
-
-  <div id="meterArea" class="hidden">
-    <div style="font-size:13px;margin-bottom:7px;">
-      타이밍에 맞춰 공격하세요!
-    </div>
-    <div class="meter">
-      <div id="goodZone"></div>
-      <div id="perfectZone"></div>
-      <div id="needle"></div>
-    </div>
-    <div class="small">
-      초록색 PERFECT / 노란색 GOOD
-    </div>
-  </div>
-
-  <div id="chaseArena" class="hidden">
-    <div id="playerRunner" class="runner">🪖</div>
-    <div id="playerLabel" class="chase-label">라뎃구</div>
-    <div id="enemyRunner" class="runner">🏃</div>
-    <div id="enemyLabel" class="chase-label">도망자</div>
-  </div>
-
-  <div id="skills"></div>
-
-  <div id="inventory">
-    <div style="text-align:left;">
-      <div style="font-weight:bold;color:#ffe58a;">
-        🍶 소주 인벤토리
+    <h2 id="chaseTitle">적을 추격하세요!</h2>
+    <p>라뎃구를 손가락이나 마우스로 움직이세요.</p>
+    <div class="chase-area" id="chaseArea">
+      <div id="playerChase" class="chase-person">
+        <svg class="character small" viewBox="0 0 150 190">
+          <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+          <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
+          <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+          <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+          <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+          <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
+          <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
+          <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+          <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+          <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+          <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+        </svg>
       </div>
-      <div id="sojuCount">보유량: 0병</div>
+      <div id="enemyChase" class="chase-person">🏃</div>
     </div>
-    <button class="gold" id="drinkButton" onclick="drinkSoju()">
-      소주 마시기
-    </button>
-  </div>
+    <p id="chaseMessage">적에게 가까이 접근하세요!</p>
+    <button onclick="drinkSoju()">🍶 소주 마시기</button>
+  </section>
 
-  <div id="controls">
-    <button class="gold" id="startButton" onclick="startGame()">
-      게임 시작
-    </button>
-  </div>
+  <section id="battleScreen" class="hidden">
+    <h1>전투 개시!</h1>
+    <div class="panel status">
+      <span id="battleStage">STAGE 1</span>
+      <span>❤️ 라뎃구 <span id="battleHp">100</span></span>
+      <span>🍶 소주 <span id="battleSoju">0</span>병</span>
+    </div>
+    <div class="stage-area">
+      <div class="person">
+        <svg class="character" viewBox="0 0 150 190">
+          <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+          <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
+          <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+          <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+          <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+          <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
+          <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
+          <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+          <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+          <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+          <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+        </svg>
+        <p>라뎃구</p>
+        <div class="bar"><div class="fill" id="playerBar"></div></div>
+      </div>
+      <div class="person">
+        <div class="enemy" id="enemyFace">😠</div>
+        <p id="enemyName">손천운</p>
+        <div class="bar"><div class="fill enemyFill" id="enemyBar"></div></div>
+      </div>
+    </div>
 
-  <div class="small">
-    Help! Violence! - Radetgu Project
-  </div>
+    <div class="panel">
+      <h3>전투 타이밍 게이지</h3>
+      <p>흰색 표시가 좁은 노란색 또는 초록색 구간에 왔을 때 공격하세요!</p>
+      <div class="gauge" id="gauge">
+        <div class="target goodLeft"></div>
+        <div class="target perfect"></div>
+        <div class="target goodRight"></div>
+        <div class="marker" id="marker"></div>
+      </div>
+      <div id="message">타이밍에 맞춰 공격하세요!</div>
+      <button class="primary" id="attackButton" onclick="attack()">공격!</button>
+    </div>
 
+    <div class="panel">
+      <h3>스킬 선택</h3>
+      <div class="skills" id="skillButtons"></div>
+    </div>
+    <button onclick="drinkSoju()">🍶 소주 마시기</button>
+  </section>
+
+  <section id="clearScreen" class="hidden">
+    <h1>STAGE CLEAR!</h1>
+    <div class="panel">
+      <h2 id="clearTitle">스테이지 클리어!</h2>
+      <p class="reward">🍶 소주 1병 획득!</p>
+      <p id="clearMessage"></p>
+      <p>현재 보유 소주: <span id="clearSoju">0</span>병</p>
+    </div>
+    <button class="primary" onclick="nextStage()">다음 스테이지</button>
+    <button onclick="drinkSoju()">🍶 소주 마시기</button>
+  </section>
+
+  <section id="gameOverScreen" class="hidden">
+    <h1>GAME OVER</h1>
+    <div class="panel">
+      <h2>라뎃구가 쓰러졌습니다...</h2>
+      <p>체력이 모두 소진되었습니다.</p>
+    </div>
+    <button class="primary" onclick="startGame()">다시 도전</button>
+    <button onclick="showTitle()">타이틀로</button>
+  </section>
+
+  <section id="endingScreen" class="hidden">
+    <h1>ALL CLEAR!</h1>
+    <div class="panel">
+      <h2>라뎃구의 승리!</h2>
+      <p>모든 적을 물리쳤습니다!</p>
+      <p class="reward">🍶 최종 소주 보유량: <span id="endingSoju">0</span>병</p>
+      <p>진정한 전설이 탄생했습니다.</p>
+    </div>
+    <button class="primary" onclick="startGame()">다시 플레이</button>
+    <button onclick="showTitle()">타이틀로</button>
+  </section>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
-
-// 스테이지 데이터
 const stages = [
-  {
-    name: "손천운",
-    emoji: "🏃",
-    description: "당구채를 든 망나니가 도망갑니다!",
-    hp: 75,
-    damage: 8
-  },
-  {
-    name: "김신",
-    emoji: "🥷",
-    description: "과거 라뎃구의 절친이었던 김신입니다.",
-    hp: 110,
-    damage: 11
-  },
-  {
-    name: "기린",
-    emoji: "🦍",
-    description: "남수원의 대장 기린이 등장했습니다.",
-    hp: 145,
-    damage: 13
-  },
-  {
-    name: "변발",
-    emoji: "👹",
-    description: "최종 보스 변발. 가장 강력한 상대입니다!",
-    hp: 220,
-    damage: 17
-  }
+  {name:"손천운", hp:75, attack:8, face:"😈", description:"당구채를 들고 도망치는 손천운!"},
+  {name:"김신", hp:110, attack:11, face:"🥷", description:"과거의 절친 김신이 나타났다!"},
+  {name:"기린", hp:145, attack:13, face:"👹", description:"남수원의 대장 기린!"},
+  {name:"변발", hp:220, attack:17, face:"💀", description:"최종 보스 변발과의 결전!"}
 ];
 
-// 스킬 데이터
-const skillData = {
-  slap: {
-    name: "싸대기",
-    damage: 13,
-    unlock: 1
-  },
-  punch: {
-    name: "죽빵",
-    damage: 22,
-    unlock: 2
-  },
-  spit: {
-    name: "침뱉기",
-    damage: 18,
-    unlock: 3
-  },
-  ultimate: {
-    name: "음주욕설전화",
-    damage: 55,
-    unlock: 3
-  }
-};
+const skills = [
+  {name:"싸대기", damage:13, unlock:1},
+  {name:"죽빵", damage:22, unlock:2},
+  {name:"침뱉기", damage:18, unlock:3},
+  {name:"음주욕설전화", damage:55, unlock:3}
+];
 
-let stageIndex = 0;
+let stage = 0;
 let playerHp = 100;
 let enemyHp = 0;
-let enemyMaxHp = 0;
 let soju = 0;
-
-let phase = "start";
-let unlockedSkills = ["slap"];
-
-let meterPosition = 0;
-let meterDirection = 1;
-let meterTimer = null;
-let enemyTimer = null;
-let chaseFrame = null;
-
-let playerX = 20;
-let playerY = 55;
-let enemyX = 80;
-let enemyY = 45;
-let enemyTargetX = 75;
-let enemyTargetY = 50;
-let pointerDown = false;
-let chaseLastTime = 0;
+let selectedSkill = 0;
+let markerPosition = 0;
+let markerDirection = 1;
+let gameScene = "title";
+let battleTimer = null;
+let gaugeTimer = null;
+let chaseTimer = null;
+let enemyPosition = 82;
+let playerPosition = 15;
 let lastEnemyAttack = 0;
 let clearRewardGiven = false;
 
-// 초기화
+const $ = id => document.getElementById(id);
+
+function showScreen(name) {
+  ["titleScreen","chaseScreen","battleScreen","clearScreen",
+   "gameOverScreen","endingScreen"].forEach(id => $(id).classList.add("hidden"));
+  $(name).classList.remove("hidden");
+}
+
+function stopTimers() {
+  clearInterval(battleTimer);
+  clearInterval(gaugeTimer);
+  clearInterval(chaseTimer);
+  battleTimer = gaugeTimer = chaseTimer = null;
+}
+
+function showTitle() {
+  stopTimers();
+  gameScene = "title";
+  showScreen("titleScreen");
+}
+
 function startGame() {
-  stageIndex = 0;
+  stopTimers();
+  stage = 0;
   playerHp = 100;
   soju = 0;
-  unlockedSkills = ["slap"];
-  clearRewardGiven = false;
-
-  updateSoju();
+  selectedSkill = 0;
   loadStage();
-  startChase();
 }
 
-// 스테이지 로딩
 function loadStage() {
-  const stage = stages[stageIndex];
-
-  enemyHp = stage.hp;
-  enemyMaxHp = stage.hp;
+  stopTimers();
+  if (stage >= stages.length) {
+    gameScene = "ending";
+    $("endingSoju").textContent = soju;
+    showScreen("endingScreen");
+    return;
+  }
+  enemyHp = stages[stage].hp;
   clearRewardGiven = false;
-
-  $("stageText").textContent =
-    `STAGE ${stageIndex + 1} / 4`;
-
-  $("phaseText").textContent = "추격전";
-
-  updateBars();
-  updateSkills();
-
-  $("scene").innerHTML = `
-    <div class="character">🪖</div>
-    <div class="name">${stage.name}</div>
-    <div class="desc">${stage.description}</div>
-  `;
-
-  $("message").textContent =
-    `${stage.name}이(가) 도망가기 시작했습니다! 쫓아가세요!`;
-}
-
-// 추격전 시작
-function startChase() {
-  stopAllTimers();
-
-  phase = "chase";
-
-  $("phaseText").textContent = "추격전";
-  $("chaseArena").classList.remove("hidden");
-  $("meterArea").classList.add("hidden");
-  $("controls").innerHTML = "";
-  $("scene").classList.add("hidden");
-
-  playerX = 20;
-  playerY = 55;
-  enemyX = 80;
-  enemyY = 45;
-
-  enemyTargetX = 75;
-  enemyTargetY = 50;
-
-  lastEnemyAttack = 0;
-
+  playerPosition = 15;
+  enemyPosition = 82;
+  gameScene = "chase";
+  $("stageLabel").textContent = `STAGE ${stage+1}`;
+  $("chaseTitle").textContent = stages[stage].description;
+  updateStatus();
+  showScreen("chaseScreen");
   updateChasePositions();
-
-  chaseLastTime = 0;
-  chaseFrame = requestAnimationFrame(chaseLoop);
+  chaseTimer = setInterval(() => {
+    enemyPosition = Math.max(45, enemyPosition - 0.12);
+    updateChasePositions();
+    if (Math.abs(enemyPosition-playerPosition) < 9) startBattle();
+  }, 30);
 }
 
-// 추격전 정리
-function stopChase() {
-  if (chaseFrame) {
-    cancelAnimationFrame(chaseFrame);
-    chaseFrame = null;
-  }
-
-  pointerDown = false;
-}
-
-// 추격전 움직임
-function chaseLoop(time) {
-  if (phase !== "chase") return;
-
-  if (!chaseLastTime) chaseLastTime = time;
-
-  const delta = Math.min((time - chaseLastTime) / 16.67, 2);
-  chaseLastTime = time;
-
-  // 적이 일정 시간마다 도망갈 목표 지점 변경
-  if (Math.random() < 0.025 * delta) {
-    enemyTargetX = 10 + Math.random() * 80;
-    enemyTargetY = 15 + Math.random() * 70;
-  }
-
-  // 적 이동
-  const dx = enemyTargetX - enemyX;
-  const dy = enemyTargetY - enemyY;
-  const distance = Math.sqrt(dx * dx + dy * dy);
-
-  if (distance > 1) {
-    enemyX += (dx / distance) * 0.45 * delta;
-    enemyY += (dy / distance) * 0.45 * delta;
-  }
-
-  // 라뎃구와 적 사이 거리
-  const diffX = playerX - enemyX;
-  const diffY = playerY - enemyY;
-  const gap = Math.sqrt(diffX * diffX + diffY * diffY);
-
-  updateChasePositions();
-
-  if (gap < 9) {
-    catchEnemy();
-    return;
-  }
-
-  chaseFrame = requestAnimationFrame(chaseLoop);
-}
-
-// 위치 갱신
 function updateChasePositions() {
-  $("playerRunner").style.left = playerX + "%";
-  $("playerRunner").style.top = playerY + "%";
-
-  $("playerLabel").style.left = playerX + "%";
-  $("playerLabel").style.top = (playerY + 9) + "%";
-
-  $("enemyRunner").style.left = enemyX + "%";
-  $("enemyRunner").style.top = enemyY + "%";
-
-  $("enemyLabel").style.left = enemyX + "%";
-  $("enemyLabel").style.top = (enemyY + 9) + "%";
+  $("playerChase").style.left = playerPosition + "%";
+  $("enemyChase").style.left = enemyPosition + "%";
 }
 
-// 드래그 조작
-const arena = $("chaseArena");
+const chaseArea = $("chaseArea");
+let dragging = false;
 
-arena.addEventListener("pointerdown", function(e) {
-  if (phase !== "chase") return;
-
-  pointerDown = true;
-  arena.setPointerCapture(e.pointerId);
-  movePlayer(e);
-});
-
-arena.addEventListener("pointermove", function(e) {
-  if (!pointerDown || phase !== "chase") return;
-  movePlayer(e);
-});
-
-arena.addEventListener("pointerup", function() {
-  pointerDown = false;
-});
-
-arena.addEventListener("pointercancel", function() {
-  pointerDown = false;
-});
-
-function movePlayer(e) {
-  const rect = arena.getBoundingClientRect();
-
-  playerX = ((e.clientX - rect.left) / rect.width) * 100;
-  playerY = ((e.clientY - rect.top) / rect.height) * 100;
-
-  playerX = Math.max(5, Math.min(95, playerX));
-  playerY = Math.max(10, Math.min(85, playerY));
-
+function movePlayer(event) {
+  if (!dragging || gameScene !== "chase") return;
+  const rect = chaseArea.getBoundingClientRect();
+  playerPosition = Math.max(3,Math.min(96,(event.clientX-rect.left)/rect.width*100));
   updateChasePositions();
+  if (Math.abs(enemyPosition-playerPosition) < 9) startBattle();
 }
+chaseArea.addEventListener("pointerdown", event => {
+  dragging = true;
+  chaseArea.setPointerCapture(event.pointerId);
+  movePlayer(event);
+});
+chaseArea.addEventListener("pointermove", movePlayer);
+chaseArea.addEventListener("pointerup", () => dragging=false);
+chaseArea.addEventListener("pointercancel", () => dragging=false);
 
-// 적 포획
-function catchEnemy() {
-  if (phase !== "chase") return;
-
-  stopChase();
-
-  phase = "battle";
-
-  $("phaseText").textContent = "전투";
-  $("chaseArena").classList.add("hidden");
-  $("scene").classList.remove("hidden");
-  $("meterArea").classList.remove("hidden");
-
-  const stage = stages[stageIndex];
-
-  $("scene").innerHTML = `
-    <div class="character">🪖 ⚔️ ${stage.emoji}</div>
-    <div class="name">${stage.name}와의 전투!</div>
-    <div class="desc">드디어 붙잡았습니다. 이제 결판을 내세요!</div>
-  `;
-
-  $("message").textContent =
-    `${stage.name}와의 전투가 시작되었습니다!`;
-
-  startMeter();
-  startEnemyAttack();
-  updateSkills();
-}
-
-// 타이밍 게이지
-function startMeter() {
-  clearInterval(meterTimer);
-
-  meterPosition = 0;
-  meterDirection = 1;
-
-  meterTimer = setInterval(() => {
-    if (phase !== "battle") return;
-
-    meterPosition += meterDirection * 1.4;
-
-    if (meterPosition >= 100) {
-      meterPosition = 100;
-      meterDirection = -1;
-    }
-
-    if (meterPosition <= 0) {
-      meterPosition = 0;
-      meterDirection = 1;
-    }
-
-    $("needle").style.left = meterPosition + "%";
-  }, 20);
-}
-
-// 적 반격
-function startEnemyAttack() {
-  clearInterval(enemyTimer);
-
-  enemyTimer = setInterval(() => {
-    if (phase !== "battle") return;
-
-    const stage = stages[stageIndex];
-
-    playerHp -= stage.damage;
-
-    if (playerHp < 0) playerHp = 0;
-
-    updateBars();
-
-    $("message").textContent =
-      `${stage.name}의 반격! 라뎃구가 ${stage.damage}의 피해를 입었습니다!`;
-
-    if (playerHp <= 0) {
-      gameOver();
-    }
-  }, 3000);
-}
-
-// 공격
-function attack(skill) {
-  if (phase !== "battle") return;
-
-  if (!unlockedSkills.includes(skill)) return;
-
-  const data = skillData[skill];
-
-  let multiplier = 0.5;
-  let result = "MISS";
-
-  if (meterPosition >= 70 && meterPosition <= 90) {
-    multiplier = 1.8;
-    result = "PERFECT!";
-  } else if (meterPosition >= 35) {
-    multiplier = 1.2;
-    result = "GOOD!";
-  }
-
-  const damage = Math.round(data.damage * multiplier);
-
-  enemyHp -= damage;
-
-  if (enemyHp < 0) enemyHp = 0;
-
+function startBattle() {
+  if (gameScene !== "chase") return;
+  stopTimers();
+  gameScene = "battle";
+  enemyHp = stages[stage].hp;
+  lastEnemyAttack = Date.now();
+  $("battleStage").textContent = `STAGE ${stage+1} : ${stages[stage].name}`;
+  $("enemyName").textContent = stages[stage].name;
+  $("enemyFace").textContent = stages[stage].face;
+  $("message").textContent = "적을 공격하세요!";
+  updateStatus();
   updateBars();
-
-  let extra = "";
-
-  if (skill === "ultimate") {
-    extra = " 📱 라뎃구가 휴대전화를 꺼내 음주욕설전화를 걸었습니다!";
-  }
-
-  $("message").textContent =
-    `${result} ${data.name}! 적에게 ${damage}의 피해!${extra}`;
-
-  $("scene").innerHTML = `
-    <div class="character">🪖 💥 ${stages[stageIndex].emoji}</div>
-    <div class="name">${result}</div>
-    <div class="desc">${data.name} 공격 성공! ${damage} 피해!</div>
-  `;
-
-  if (enemyHp <= 0) {
-    stageClear();
-  }
+  renderSkills();
+  showScreen("battleScreen");
+  markerPosition = 0;
+  markerDirection = 1;
+  gaugeTimer = setInterval(moveMarker, 18);
+  battleTimer = setInterval(enemyTurn, 1000);
 }
 
-// 스테이지 클리어
-function stageClear() {
-  if (phase !== "battle") return;
-  if (clearRewardGiven) return;
-
-  clearRewardGiven = true;
-  phase = "clear";
-
-  stopAllTimers();
-
-  // 스테이지 클리어 보상: 소주 10병
-  soju += 10;
-  updateSoju();
-
-  $("phaseText").textContent = "클리어";
-  $("meterArea").classList.add("hidden");
-
-  $("scene").innerHTML = `
-    <div class="character">🏆 🪖</div>
-    <div class="name">STAGE CLEAR!</div>
-    <div class="desc">
-      ${stages[stageIndex].name} 격파 성공!<br>
-      🍶 소주 10병을 획득했습니다!
-    </div>
-  `;
-
-  $("message").textContent =
-    `승리! 소주 10병 획득! 현재 보유량: ${soju}병`;
-
-  // 스킬 해금
-  if (stageIndex === 1 && !unlockedSkills.includes("punch")) {
-    unlockedSkills.push("punch");
-    $("message").textContent += " / 신규 스킬 죽빵 습득!";
+function moveMarker() {
+  markerPosition += markerDirection * 0.85;
+  if (markerPosition >= 100) {
+    markerPosition = 100;
+    markerDirection = -1;
   }
-
-  if (stageIndex === 2) {
-    if (!unlockedSkills.includes("spit")) {
-      unlockedSkills.push("spit");
-    }
-
-    if (!unlockedSkills.includes("ultimate")) {
-      unlockedSkills.push("ultimate");
-    }
-
-    $("message").textContent +=
-      " / 신규 스킬 침뱉기, 음주욕설전화 습득!";
+  if (markerPosition <= 0) {
+    markerPosition = 0;
+    markerDirection = 1;
   }
-
-  updateSkills();
-
-  if (stageIndex === 3) {
-    $("controls").innerHTML = `
-      <button class="gold" onclick="ending()">
-        엔딩 보기
-      </button>
-    `;
-  } else {
-    $("controls").innerHTML = `
-      <button class="gold" onclick="nextStage()">
-        다음 스테이지
-      </button>
-    `;
-  }
+  $("marker").style.left = markerPosition + "%";
 }
 
-// 다음 스테이지
-function nextStage() {
-  if (phase !== "clear") return;
-
-  stageIndex++;
-
-  loadStage();
-  startChase();
-}
-
-// 엔딩
-function ending() {
-  phase = "end";
-  stopAllTimers();
-
-  $("phaseText").textContent = "END";
-
-  $("scene").innerHTML = `
-    <div class="character">🪖 🏆</div>
-    <div class="name">HELP! VIOLENCE!</div>
-    <div class="desc">
-      라뎃구의 여정이 끝났습니다.<br><br>
-      모든 적을 물리치고 학폭근절을 위한 여정을 완수했습니다!<br><br>
-      🍶 최종 소주 보유량: ${soju}병
-    </div>
-  `;
-
-  $("message").textContent =
-    "축하합니다! 모든 스테이지를 클리어했습니다.";
-
-  $("controls").innerHTML = `
-    <button class="gold" onclick="startGame()">
-      처음부터 다시 하기
-    </button>
-  `;
-}
-
-// 게임 오버
-function gameOver() {
-  phase = "gameover";
-  stopAllTimers();
-
-  $("phaseText").textContent = "GAME OVER";
-
-  $("scene").innerHTML = `
-    <div class="character">💀</div>
-    <div class="name">GAME OVER</div>
-    <div class="desc">라뎃구가 쓰러졌습니다...</div>
-  `;
-
-  $("message").textContent =
-    "소주를 마셔 체력을 회복하거나 다시 도전해 보세요!";
-
-  $("controls").innerHTML = `
-    <button class="gold" onclick="startGame()">
-      다시 시작
-    </button>
-  `;
-}
-
-// 소주 인벤토리
-function updateSoju() {
-  $("sojuCount").textContent = `보유량: ${soju}병`;
-  $("drinkButton").disabled = soju <= 0 || playerHp >= 100;
-}
-
-// 소주 마시기
-function drinkSoju() {
-  if (soju <= 0) {
-    $("message").textContent = "소주가 없습니다!";
-    return;
-  }
-
-  if (playerHp >= 100) {
-    $("message").textContent = "체력이 이미 가득 찼습니다!";
-    return;
-  }
-
-  if (phase === "start" || phase === "end" ||
-      phase === "gameover" || phase === "chase") {
-    $("message").textContent =
-      "전투 중이거나 스테이지 사이에 소주를 마실 수 있습니다!";
-    return;
-  }
-
-  soju--;
-  playerHp = 100;
-
-  updateBars();
-  updateSoju();
-
-  $("message").textContent =
-    "🍶 캬아! 소주 한 병 원샷! 라뎃구 체력 완전 회복!";
-}
-
-// 체력바 갱신
-function updateBars() {
-  $("playerBar").style.width =
-    Math.max(0, playerHp) + "%";
-
-  $("enemyBar").style.width =
-    enemyMaxHp > 0
-      ? Math.max(0, enemyHp / enemyMaxHp * 100) + "%"
-      : "0%";
-
-  $("playerHpText").textContent =
-    `${playerHp} / 100`;
-
-  $("enemyHpText").textContent =
-    phase === "start" ? "-" : `${enemyHp} / ${enemyMaxHp}`;
-
-  updateSoju();
-}
-
-// 스킬 버튼 갱신
-function updateSkills() {
-  const container = $("skills");
-  container.innerHTML = "";
-
-  if (phase !== "battle") return;
-
-  unlockedSkills.forEach(skill => {
-    const data = skillData[skill];
-
-    const button = document.createElement("button");
-
-    button.textContent =
-      `${data.name} (${data.damage})`;
-
-    if (skill === "ultimate") {
-      button.className = "red";
-    }
-
-    button.onclick = () => attack(skill);
-
-    container.appendChild(button);
+function renderSkills() {
+  const box = $("skillButtons");
+  box.innerHTML = "";
+  skills.forEach((skill,index) => {
+    const unlocked = stage+1 >= skill.unlock;
+    const btn = document.createElement("button");
+    btn.textContent = unlocked ? skill.name : "🔒 잠김";
+    btn.disabled = !unlocked;
+    if (selectedSkill === index) btn.classList.add("selected");
+    btn.onclick = () => {
+      selectedSkill = index;
+      renderSkills();
+    };
+    box.appendChild(btn);
   });
 }
 
-// 모든 타이머 정리
-function stopAllTimers() {
-  clearInterval(meterTimer);
-  clearInterval(enemyTimer);
-
-  meterTimer = null;
-  enemyTimer = null;
-  stopChase();
+function attack() {
+  if (gameScene !== "battle") return;
+  const position = markerPosition;
+  let multiplier = 0.5;
+  let result = "MISS!";
+  if (position >= 81 && position <= 85) {
+    multiplier = 1.8;
+    result = "PERFECT!";
+  } else if ((position >= 75 && position < 81) ||
+             (position > 85 && position <= 91)) {
+    multiplier = 1.2;
+    result = "GOOD!";
+  }
+  const skill = skills[selectedSkill];
+  const damage = Math.round(skill.damage * multiplier);
+  enemyHp = Math.max(0,enemyHp-damage);
+  $("message").textContent = `${result} ${skill.name}! ${damage} 피해!`;
+  updateBars();
+  if (enemyHp <= 0) stageClear();
 }
 
-// 최초 화면
-updateSoju();
-updateBars();
-</script>
+function enemyTurn() {
+  if (gameScene !== "battle") return;
+  if (Date.now()-lastEnemyAttack < 3000) return;
+  lastEnemyAttack = Date.now();
+  const damage = stages[stage].attack;
+  playerHp = Math.max(0,playerHp-damage);
+  $("message").textContent = `${stages[stage].name}의 반격! 체력 -${damage}`;
+  updateBars();
+  updateStatus();
+  if (playerHp <= 0) gameOver();
+}
 
+function updateBars() {
+  $("playerBar").style.width = playerHp + "%";
+  $("enemyBar").style.width = Math.max(0,enemyHp/stages[stage].hp*100) + "%";
+  $("battleHp").textContent = playerHp;
+}
+
+function updateStatus() {
+  $("hpText").textContent = playerHp;
+  $("sojuText").textContent = soju;
+  $("battleHp").textContent = playerHp;
+  $("battleSoju").textContent = soju;
+  $("clearSoju").textContent = soju;
+}
+
+function drinkSoju() {
+  if (!["chase","battle","clear"].includes(gameScene)) return;
+  if (soju <= 0) {
+    alert("소주가 없습니다!");
+    return;
+  }
+  if (playerHp >= 100) {
+    alert("체력이 이미 가득 찼습니다!");
+    return;
+  }
+  soju--;
+  playerHp = 100;
+  updateStatus();
+  updateBars();
+  if (gameScene === "chase") {
+    $("chaseMessage").textContent = "🍶 소주를 마시고 체력을 완전히 회복했습니다!";
+  } else if (gameScene === "battle") {
+    $("message").textContent = "🍶 소주 한 병! 체력 완전 회복!";
+  }
+}
+
+function stageClear() {
+  if (gameScene !== "battle") return;
+  stopTimers();
+  gameScene = "clear";
+  if (!clearRewardGiven) {
+    soju += 1;
+    clearRewardGiven = true;
+  }
+  $("clearTitle").textContent = `${stages[stage].name} 격파!`;
+  $("clearMessage").textContent =
+    stage === 0 ? "죽빵 스킬이 해금되었습니다!" :
+    stage === 1 ? "침뱉기와 음주욕설전화가 해금되었습니다!" :
+    stage === 2 ? "마지막 적 변발이 기다리고 있습니다!" :
+    "모든 스테이지를 정복했습니다!";
+  $("clearSoju").textContent = soju;
+  updateStatus();
+  showScreen("clearScreen");
+}
+
+function nextStage() {
+  stage++;
+  loadStage();
+}
+
+function gameOver() {
+  stopTimers();
+  gameScene = "gameover";
+  showScreen("gameOverScreen");
+}
+</script>
 </body>
 </html>
