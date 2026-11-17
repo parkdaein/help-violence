@@ -205,8 +205,8 @@ h2 { color:#ffd34d; }
         <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
         <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
       </svg>
-      <h2>라뎃구의 귀환</h2>
-      <p>마른 얼굴의 군인 라뎃구가 출동합니다!</p>
+      <h2>라뎃구의 정의구현</h2>
+      <p>전투의 신 라뎃구가 출동합니다!</p>
       <p>적을 추격하고 타이밍에 맞춰 공격하세요.</p>
       <p>스테이지를 클리어하고 소주를 모으세요.</p>
       <p>각 스테이지 보상은 소주 1병입니다.</p>
@@ -241,7 +241,7 @@ h2 { color:#ffd34d; }
       </div>
       <div id="enemyChase" class="chase-person">🏃</div>
     </div>
-    <p id="chaseMessage">적에게 가까이 접근하세요!</p>
+    <p id="chaseMessage">적에게 가까이 접근해서 패세요!</p>
     <button onclick="drinkSoju()">🍶 소주 마시기</button>
   </section>
 
@@ -335,16 +335,16 @@ h2 { color:#ffd34d; }
 <script>
 const stages = [
   {name:"손천운", hp:75, attack:8, face:"😈", description:"당구채를 들고 도망치는 손천운!"},
-  {name:"김신", hp:110, attack:11, face:"🥷", description:"과거의 절친 김신이 나타났다!"},
+  {name:"김신", hp:110, attack:11, face:"🥷", description:"절친과의 대결"},
   {name:"기린", hp:145, attack:13, face:"👹", description:"남수원의 대장 기린!"},
   {name:"변발", hp:220, attack:17, face:"💀", description:"최종 보스 변발과의 결전!"}
 ];
 
 const skills = [
-  {name:"싸대기", damage:13, unlock:1},
-  {name:"죽빵", damage:22, unlock:2},
-  {name:"침뱉기", damage:18, unlock:3},
-  {name:"음주욕설전화", damage:55, unlock:3}
+  {name:"싸대기", damage:8, unlock:1},
+  {name:"죽빵", damage:10, unlock:2},
+  {name:"침뱉기", damage:12, unlock:3},
+  {name:"음주욕설전화", damage:20, unlock:3}
 ];
 
 let stage = 0;
