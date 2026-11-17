@@ -3,591 +3,482 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HELP! VIOLENCE!</title>
 <style>
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:#171923;
-  color:#fff;
-  font-family:Arial,"Malgun Gothic",sans-serif;
-  text-align:center;
-  user-select:none;
-}
-button {
-  border:2px solid #aaa;
-  border-radius:12px;
-  padding:13px 20px;
-  font-size:17px;
-  font-weight:bold;
-  color:white;
-  background:#333;
-  cursor:pointer;
-  touch-action:manipulation;
-}
-button:active { transform:scale(.96); }
-button:disabled { opacity:.35; cursor:not-allowed; }
-#game {
-  max-width:900px;
-  min-height:100vh;
-  margin:auto;
-  padding:16px;
-  background:linear-gradient(#30394e,#171923);
-  overflow:hidden;
-}
-h1 {
-  color:#ff3434;
-  font-size:clamp(32px,7vw,56px);
-  text-shadow:3px 3px #000;
-  margin:12px 0;
-}
-h2 { color:#ffd34d; }
-.panel {
-  background:#20232d;
-  border:2px solid #737987;
-  border-radius:15px;
-  padding:16px;
-  margin:12px 0;
-}
-.hidden { display:none !important; }
-.status {
-  display:flex;
-  justify-content:space-around;
-  flex-wrap:wrap;
-  gap:8px;
-  font-size:16px;
-  font-weight:bold;
-}
-.bar {
-  height:17px;
-  background:#555;
-  border:1px solid #aaa;
-  border-radius:20px;
-  overflow:hidden;
-  margin:8px 0;
-}
-.fill {
-  height:100%;
-  width:100%;
-  background:#42d879;
-  transition:width .2s;
-}
-.enemyFill { background:#ed4545; }
-.character {
-  width:150px;
-  height:190px;
-  margin:auto;
-  display:block;
-}
-.character.small {
-  width:105px;
-  height:135px;
-}
-.stage-area {
-  min-height:240px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  gap:10px;
-  background:linear-gradient(#566477,#30313a);
-  border-radius:15px;
-  border:2px solid #858b98;
-  margin:15px 0;
-  position:relative;
-}
-.person {
-  width:42%;
-  text-align:center;
-}
-.person p { font-weight:bold; }
-.enemy {
-  font-size:90px;
-  line-height:1.5;
-}
-.chase-area {
-  height:260px;
-  position:relative;
-  background:linear-gradient(#78899a 0%,#4b5964 55%,#554b3c 56%,#39312a 100%);
-  border:3px solid #aaa;
-  border-radius:15px;
-  overflow:hidden;
-  touch-action:none;
-  margin:15px 0;
-}
-.chase-person {
-  position:absolute;
-  bottom:18px;
-  font-size:48px;
-  transform:translateX(-50%);
-}
-#playerChase { left:15%; }
-#enemyChase { left:82%; }
-.gauge {
-  height:30px;
-  background:#151515;
-  border:3px solid #aaa;
-  border-radius:7px;
-  position:relative;
-  overflow:hidden;
-  margin:15px 0;
-}
-.target {
-  position:absolute;
-  top:0;
-  height:100%;
-}
-.goodLeft { left:75%; width:6%; background:#f0c52d; }
-.perfect { left:81%; width:4%; background:#26d75b; }
-.goodRight { left:85%; width:6%; background:#f0c52d; }
-.marker {
-  position:absolute;
-  top:-3px;
-  height:32px;
-  width:5px;
-  background:white;
-  box-shadow:0 0 5px #fff;
-  left:0%;
-  z-index:2;
-}
-.skills {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
-}
-.skills button { background:#424b61; }
-.skills button.selected { background:#bd3030; border-color:#fff; }
-.primary {
-  background:#c8202e;
-  border-color:#ff7b7b;
-  font-size:22px;
-  padding:16px 30px;
-}
-.secondary { background:#424b61; }
-#message {
-  min-height:36px;
-  color:#ffdc62;
-  font-weight:bold;
-  font-size:18px;
-  margin:10px;
-}
-.reward {
-  color:#ffe45b;
-  font-size:25px;
-  font-weight:bold;
-}
-@media(max-width:500px) {
-  #game { padding:10px; }
-  .stage-area { min-height:190px; }
-  .enemy { font-size:65px; }
-  .skills button { font-size:15px; padding:12px 5px; }
+*{box-sizing:border-box}
+body{margin:0;background:#171923;color:white;font-family:Arial,"Malgun Gothic",sans-serif;text-align:center;user-select:none}
+button{border:2px solid #aaa;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:bold;color:white;background:#333;cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.35;cursor:not-allowed}
+#game{max-width:900px;min-height:100vh;margin:auto;padding:15px;background:linear-gradient(#30394e,#171923);overflow:hidden}
+h1{color:#ff3434;font-size:clamp(32px,7vw,55px);text-shadow:3px 3px #000;margin:12px 0}
+h2{color:#ffd34d}
+.panel{background:#20232d;border:2px solid #737987;border-radius:15px;padding:15px;margin:12px 0}
+.hidden{display:none!important}
+.status{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;font-size:16px;font-weight:bold}
+.bar{height:17px;background:#555;border:1px solid #aaa;border-radius:20px;overflow:hidden;margin:8px 0}
+.fill{height:100%;width:100%;background:#42d879;transition:width .2s}
+.enemyFill{background:#ed4545}
+.character{width:150px;height:190px;margin:auto;display:block}
+.character.small{width:105px;height:135px}
+.stage-area{min-height:220px;display:flex;justify-content:space-around;align-items:center;gap:10px;background:linear-gradient(#566477,#30313a);border-radius:15px;border:2px solid #858b98;margin:15px 0}
+.person{width:42%;text-align:center}
+.enemy{font-size:85px;line-height:1.5}
+.chase-area{height:250px;position:relative;background:linear-gradient(#78899a 0%,#4b5964 55%,#554b3c 56%,#39312a 100%);border:3px solid #aaa;border-radius:15px;overflow:hidden;margin:15px 0;touch-action:none}
+.chase-person{position:absolute;bottom:18px;font-size:48px;transform:translateX(-50%)}
+#playerChase{left:15%}#enemyChase{left:82%}
+.gauge{height:30px;background:#151515;border:3px solid #aaa;border-radius:7px;position:relative;overflow:hidden;margin:15px 0}
+.target{position:absolute;top:0;height:100%}
+.goodLeft{left:75%;width:6%;background:#f0c52d}
+.perfect{left:81%;width:4%;background:#26d75b}
+.goodRight{left:85%;width:6%;background:#f0c52d}
+.marker{position:absolute;top:-3px;height:32px;width:5px;background:white;box-shadow:0 0 5px #fff;left:0%;z-index:2}
+.skills{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.skills button{background:#424b61;min-height:62px}
+.skills button.selected{background:#bd3030;border-color:white}
+.skills button.cooling{background:#292d38;border-color:#777;color:#aaa}
+.primary{background:#c8202e;border-color:#ff7b7b;font-size:22px;padding:16px 30px}
+#message{min-height:35px;color:#ffdc62;font-weight:bold;font-size:18px;margin:10px}
+.reward{color:#ffe45b;font-size:25px;font-weight:bold}
+.skill-info{font-size:12px;color:#ccc;display:block;margin-top:5px}
+@media(max-width:500px){
+ #game{padding:9px}
+ .stage-area{min-height:180px}
+ .enemy{font-size:65px}
+ .skills button{font-size:14px;padding:9px 4px}
 }
 </style>
 </head>
 <body>
 <div id="game">
 
-  <section id="titleScreen">
-    <h1>HELP! VIOLENCE!</h1>
-    <div class="panel">
-      <svg class="character" viewBox="0 0 150 190">
-        <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
-        <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
-        <path d="M58 107 L75 135 L92 107" fill="#d1b89b"/>
-        <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
-        <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
-        <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
-        <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
-        <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4" stroke-linecap="round"/>
-        <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
-        <path d="M74 78 L71 86 L77 86" fill="none" stroke="#684535" stroke-width="2"/>
-        <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
-        <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
-        <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
-      </svg>
-      <h2>라뎃구의 정의구현</h2>
-      <p>전투의 신 라뎃구가 출동합니다!</p>
-      <p>적을 추격하고 타이밍에 맞춰 공격하세요.</p>
-      <p>스테이지를 클리어하고 소주를 모으세요.</p>
-      <p>각 스테이지 보상은 소주 1병입니다.</p>
-    </div>
-    <button class="primary" onclick="startGame()">게임 시작</button>
-  </section>
+<section id="titleScreen">
+<h1>HELP! VIOLENCE!</h1>
+<div class="panel">
+<svg class="character" viewBox="0 0 150 190">
+<path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+<path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
+<ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+<path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+<path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+<path d="M70 25 L80 25 L75 39Z" fill="#d94b40"/>
+<path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
+<path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+<path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+<path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+<text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+</svg>
+<h2>라뎃구의 귀환</h2>
+<p>다섯 명의 보스를 모두 물리치세요!</p>
+<p>정확한 타이밍으로 공격하고 소주를 모으세요.</p>
+<p>스테이지 클리어 보상: 소주 1병</p>
+</div>
+<button class="primary" onclick="startGame()">게임 시작</button>
+</section>
 
-  <section id="chaseScreen" class="hidden">
-    <h1>HELP! VIOLENCE!</h1>
-    <div class="panel status">
-      <span id="stageLabel">STAGE 1</span>
-      <span>❤️ 체력 <span id="hpText">100</span></span>
-      <span>🍶 소주 <span id="sojuText">0</span>병</span>
-    </div>
-    <h2 id="chaseTitle">적을 추격하세요!</h2>
-    <p>라뎃구를 손가락이나 마우스로 움직이세요.</p>
-    <div class="chase-area" id="chaseArea">
-      <div id="playerChase" class="chase-person">
-        <svg class="character small" viewBox="0 0 150 190">
-          <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
-          <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
-          <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
-          <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
-          <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
-          <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
-          <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
-          <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
-          <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
-          <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
-          <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
-        </svg>
-      </div>
-      <div id="enemyChase" class="chase-person">🏃</div>
-    </div>
-    <p id="chaseMessage">적에게 가까이 접근해서 패세요!</p>
-    <button onclick="drinkSoju()">🍶 소주 마시기</button>
-  </section>
+<section id="chaseScreen" class="hidden">
+<h1>HELP! VIOLENCE!</h1>
+<div class="panel status">
+<span id="stageLabel">STAGE 1</span>
+<span>❤️ 체력 <span id="hpText">100</span></span>
+<span>🍶 소주 <span id="sojuText">0</span>병</span>
+</div>
+<h2 id="chaseTitle">적을 추격하세요!</h2>
+<p>라뎃구를 손가락이나 마우스로 움직이세요.</p>
+<div class="chase-area" id="chaseArea">
+<div id="playerChase" class="chase-person">
+<svg class="character small" viewBox="0 0 150 190">
+<path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+<ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+<path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+<path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+<path d="M70 25 L80 25 L75 39Z" fill="#d94b40"/>
+<path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
+<path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+<path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+<path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+<text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+</svg>
+</div>
+<div id="enemyChase" class="chase-person">🏃</div>
+</div>
+<p id="chaseMessage">적에게 가까이 접근하세요!</p>
+<button onclick="drinkSoju()">🍶 소주 마시기</button>
+</section>
 
-  <section id="battleScreen" class="hidden">
-    <h1>전투 개시!</h1>
-    <div class="panel status">
-      <span id="battleStage">STAGE 1</span>
-      <span>❤️ 라뎃구 <span id="battleHp">100</span></span>
-      <span>🍶 소주 <span id="battleSoju">0</span>병</span>
-    </div>
-    <div class="stage-area">
-      <div class="person">
-        <svg class="character" viewBox="0 0 150 190">
-          <path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190 Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
-          <path d="M55 112 L75 145 L95 112" fill="#303626" stroke="#171a12" stroke-width="3"/>
-          <ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
-          <path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50 Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
-          <path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74 Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
-          <path d="M70 25 L80 25 L75 39 Z" fill="#d94b40"/>
-          <path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
-          <path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
-          <path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
-          <path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
-          <text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
-        </svg>
-        <p>라뎃구</p>
-        <div class="bar"><div class="fill" id="playerBar"></div></div>
-      </div>
-      <div class="person">
-        <div class="enemy" id="enemyFace">😠</div>
-        <p id="enemyName">손천운</p>
-        <div class="bar"><div class="fill enemyFill" id="enemyBar"></div></div>
-      </div>
-    </div>
+<section id="battleScreen" class="hidden">
+<h1>전투 개시!</h1>
+<div class="panel status">
+<span id="battleStage">STAGE 1</span>
+<span>❤️ 라뎃구 <span id="battleHp">100</span></span>
+<span>🍶 소주 <span id="battleSoju">0</span>병</span>
+</div>
+<div class="stage-area">
+<div class="person">
+<svg class="character" viewBox="0 0 150 190">
+<path d="M27 180 Q25 130 42 115 L108 115 Q127 135 125 190Z" fill="#454b31" stroke="#171a12" stroke-width="4"/>
+<ellipse cx="75" cy="78" rx="35" ry="45" fill="#c99c7c" stroke="#382c25" stroke-width="3"/>
+<path d="M42 68 Q38 17 75 15 Q115 18 108 70 L99 47 Q75 32 50 50Z" fill="#45452f" stroke="#171a12" stroke-width="4"/>
+<path d="M39 60 Q75 44 111 60 L108 72 Q75 59 42 74Z" fill="#333526" stroke="#171a12" stroke-width="3"/>
+<path d="M70 25 L80 25 L75 39Z" fill="#d94b40"/>
+<path d="M58 76 L68 76 M83 76 L93 76" stroke="#30251e" stroke-width="4"/>
+<path d="M60 88 Q75 93 90 88" fill="none" stroke="#52352d" stroke-width="2"/>
+<path d="M44 125 L105 125" stroke="#d7c5a0" stroke-width="7"/>
+<path d="M44 125 L105 125" stroke="#9e2424" stroke-width="4"/>
+<text x="75" y="166" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">학폭근절</text>
+</svg>
+<p>라뎃구</p>
+<div class="bar"><div class="fill" id="playerBar"></div></div>
+</div>
+<div class="person">
+<div class="enemy" id="enemyFace">😠</div>
+<p id="enemyName">손천운</p>
+<div class="bar"><div class="fill enemyFill" id="enemyBar"></div></div>
+</div>
+</div>
 
-    <div class="panel">
-      <h3>전투 타이밍 게이지</h3>
-      <p>흰색 표시가 좁은 노란색 또는 초록색 구간에 왔을 때 공격하세요!</p>
-      <div class="gauge" id="gauge">
-        <div class="target goodLeft"></div>
-        <div class="target perfect"></div>
-        <div class="target goodRight"></div>
-        <div class="marker" id="marker"></div>
-      </div>
-      <div id="message">타이밍에 맞춰 공격하세요!</div>
-      <button class="primary" id="attackButton" onclick="attack()">공격!</button>
-    </div>
+<div class="panel">
+<h3>전투 타이밍 게이지</h3>
+<p>초록색 PERFECT 구간을 노리세요!</p>
+<div class="gauge">
+<div class="target goodLeft"></div>
+<div class="target perfect"></div>
+<div class="target goodRight"></div>
+<div class="marker" id="marker"></div>
+</div>
+<div id="message">타이밍에 맞춰 공격하세요!</div>
+<button class="primary" id="attackButton" onclick="attack()">공격!</button>
+</div>
 
-    <div class="panel">
-      <h3>스킬 선택</h3>
-      <div class="skills" id="skillButtons"></div>
-    </div>
-    <button onclick="drinkSoju()">🍶 소주 마시기</button>
-  </section>
+<div class="panel">
+<h3>스킬 선택</h3>
+<div class="skills" id="skillButtons"></div>
+<p class="skill-info">스킬마다 쿨타임이 다릅니다. 사용 후 회복될 때까지 기다리세요.</p>
+</div>
+<button onclick="drinkSoju()">🍶 소주 마시기</button>
+</section>
 
-  <section id="clearScreen" class="hidden">
-    <h1>STAGE CLEAR!</h1>
-    <div class="panel">
-      <h2 id="clearTitle">스테이지 클리어!</h2>
-      <p class="reward">🍶 소주 1병 획득!</p>
-      <p id="clearMessage"></p>
-      <p>현재 보유 소주: <span id="clearSoju">0</span>병</p>
-    </div>
-    <button class="primary" onclick="nextStage()">다음 스테이지</button>
-    <button onclick="drinkSoju()">🍶 소주 마시기</button>
-  </section>
+<section id="clearScreen" class="hidden">
+<h1>STAGE CLEAR!</h1>
+<div class="panel">
+<h2 id="clearTitle">스테이지 클리어!</h2>
+<p class="reward">🍶 소주 1병 획득!</p>
+<p id="clearMessage"></p>
+<p>현재 보유 소주: <span id="clearSoju">0</span>병</p>
+</div>
+<button class="primary" onclick="nextStage()">다음 스테이지</button>
+<button onclick="drinkSoju()">🍶 소주 마시기</button>
+</section>
 
-  <section id="gameOverScreen" class="hidden">
-    <h1>GAME OVER</h1>
-    <div class="panel">
-      <h2>라뎃구가 쓰러졌습니다...</h2>
-      <p>체력이 모두 소진되었습니다.</p>
-    </div>
-    <button class="primary" onclick="startGame()">다시 도전</button>
-    <button onclick="showTitle()">타이틀로</button>
-  </section>
+<section id="gameOverScreen" class="hidden">
+<h1>GAME OVER</h1>
+<div class="panel"><h2>라뎃구가 쓰러졌습니다...</h2><p>체력이 모두 소진되었습니다.</p></div>
+<button class="primary" onclick="startGame()">다시 도전</button>
+<button onclick="showTitle()">타이틀로</button>
+</section>
 
-  <section id="endingScreen" class="hidden">
-    <h1>ALL CLEAR!</h1>
-    <div class="panel">
-      <h2>라뎃구의 승리!</h2>
-      <p>모든 적을 물리쳤습니다!</p>
-      <p class="reward">🍶 최종 소주 보유량: <span id="endingSoju">0</span>병</p>
-      <p>진정한 전설이 탄생했습니다.</p>
-    </div>
-    <button class="primary" onclick="startGame()">다시 플레이</button>
-    <button onclick="showTitle()">타이틀로</button>
-  </section>
+<section id="endingScreen" class="hidden">
+<h1>ALL CLEAR!</h1>
+<div class="panel">
+<h2>라뎃구의 승리!</h2>
+<p>다섯 명의 보스를 모두 물리쳤습니다!</p>
+<p class="reward">🍶 최종 소주 보유량: <span id="endingSoju">0</span>병</p>
+<p>진정한 전설이 탄생했습니다.</p>
+</div>
+<button class="primary" onclick="startGame()">다시 플레이</button>
+<button onclick="showTitle()">타이틀로</button>
+</section>
 </div>
 
 <script>
-const stages = [
-  {name:"손천운", hp:75, attack:8, face:"😈", description:"당구채를 들고 도망치는 손천운!"},
-  {name:"김신", hp:110, attack:11, face:"🥷", description:"대리를 기다리다 우발적 전투발생"},
-  {name:"기린", hp:145, attack:13, face:"👹", description:"남수원의 대장 기린!"},
-  {name:"변발", hp:220, attack:17, face:"💀", description:"최종 보스 변발과의 결전!"}
+const stages=[
+ {name:"손천운",hp:90,attack:10,face:"😈"},
+ {name:"군대후임",hp:130,attack:13,face:"🪖"},
+ {name:"김신",hp:165,attack:16,face:"🥷"},
+ {name:"기린",hp:205,attack:19,face:"👹"},
+ {name:"변발",hp:260,attack:23,face:"💀"}
 ];
 
-const skills = [
-  {name:"싸대기", damage:8, unlock:1},
-  {name:"죽빵", damage:10, unlock:2},
-  {name:"침뱉기", damage:12, unlock:3},
-  {name:"음주욕설전화", damage:20, unlock:3}
+const skills=[
+ {name:"싸대기",damage:9,cooldown:1200,unlock:1},
+ {name:"죽빵",damage:14,cooldown:2500,unlock:3},
+ {name:"침뱉기",damage:11,cooldown:3500,unlock:4},
+ {name:"음주욕설전화",damage:30,cooldown:8000,unlock:4}
 ];
 
-let stage = 0;
-let playerHp = 100;
-let enemyHp = 0;
-let soju = 0;
-let selectedSkill = 0;
-let markerPosition = 0;
-let markerDirection = 1;
-let gameScene = "title";
-let battleTimer = null;
-let gaugeTimer = null;
-let chaseTimer = null;
-let enemyPosition = 82;
-let playerPosition = 15;
-let lastEnemyAttack = 0;
-let clearRewardGiven = false;
+let stage=0;
+let playerHp=100;
+let enemyHp=0;
+let soju=0;
+let selectedSkill=0;
+let cooldowns=[0,0,0,0];
+let markerPosition=0;
+let markerDirection=1;
+let gameScene="title";
+let battleTimer=null;
+let gaugeTimer=null;
+let chaseTimer=null;
+let cooldownTimer=null;
+let enemyPosition=82;
+let playerPosition=15;
+let lastEnemyAttack=0;
+let clearRewardGiven=false;
 
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-function showScreen(name) {
-  ["titleScreen","chaseScreen","battleScreen","clearScreen",
-   "gameOverScreen","endingScreen"].forEach(id => $(id).classList.add("hidden"));
-  $(name).classList.remove("hidden");
+function showScreen(name){
+ ["titleScreen","chaseScreen","battleScreen","clearScreen","gameOverScreen","endingScreen"]
+ .forEach(id=>$(id).classList.add("hidden"));
+ $(name).classList.remove("hidden");
 }
 
-function stopTimers() {
-  clearInterval(battleTimer);
-  clearInterval(gaugeTimer);
-  clearInterval(chaseTimer);
-  battleTimer = gaugeTimer = chaseTimer = null;
+function stopTimers(){
+ clearInterval(battleTimer);
+ clearInterval(gaugeTimer);
+ clearInterval(chaseTimer);
+ clearInterval(cooldownTimer);
+ battleTimer=gaugeTimer=chaseTimer=cooldownTimer=null;
 }
 
-function showTitle() {
-  stopTimers();
-  gameScene = "title";
-  showScreen("titleScreen");
+function showTitle(){
+ stopTimers();
+ gameScene="title";
+ showScreen("titleScreen");
 }
 
-function startGame() {
-  stopTimers();
-  stage = 0;
-  playerHp = 100;
-  soju = 0;
-  selectedSkill = 0;
-  loadStage();
+function startGame(){
+ stopTimers();
+ stage=0;
+ playerHp=100;
+ soju=0;
+ selectedSkill=0;
+ cooldowns=[0,0,0,0];
+ loadStage();
 }
 
-function loadStage() {
-  stopTimers();
-  if (stage >= stages.length) {
-    gameScene = "ending";
-    $("endingSoju").textContent = soju;
-    showScreen("endingScreen");
-    return;
-  }
-  enemyHp = stages[stage].hp;
-  clearRewardGiven = false;
-  playerPosition = 15;
-  enemyPosition = 82;
-  gameScene = "chase";
-  $("stageLabel").textContent = `STAGE ${stage+1}`;
-  $("chaseTitle").textContent = stages[stage].description;
-  updateStatus();
-  showScreen("chaseScreen");
+function loadStage(){
+ stopTimers();
+ if(stage>=stages.length){
+  gameScene="ending";
+  $("endingSoju").textContent=soju;
+  showScreen("endingScreen");
+  return;
+ }
+ enemyHp=stages[stage].hp;
+ clearRewardGiven=false;
+ playerPosition=15;
+ enemyPosition=82;
+ gameScene="chase";
+ $("stageLabel").textContent=`STAGE ${stage+1} : ${stages[stage].name}`;
+ $("chaseTitle").textContent=`${stages[stage].name}이(가) 나타났다!`;
+ updateStatus();
+ showScreen("chaseScreen");
+ updateChasePositions();
+ chaseTimer=setInterval(()=>{
+  enemyPosition=Math.max(45,enemyPosition-0.16);
   updateChasePositions();
-  chaseTimer = setInterval(() => {
-    enemyPosition = Math.max(45, enemyPosition - 0.12);
-    updateChasePositions();
-    if (Math.abs(enemyPosition-playerPosition) < 9) startBattle();
-  }, 30);
+  if(Math.abs(enemyPosition-playerPosition)<9)startBattle();
+ },30);
 }
 
-function updateChasePositions() {
-  $("playerChase").style.left = playerPosition + "%";
-  $("enemyChase").style.left = enemyPosition + "%";
+function updateChasePositions(){
+ $("playerChase").style.left=playerPosition+"%";
+ $("enemyChase").style.left=enemyPosition+"%";
 }
 
-const chaseArea = $("chaseArea");
-let dragging = false;
+const chaseArea=$("chaseArea");
+let dragging=false;
 
-function movePlayer(event) {
-  if (!dragging || gameScene !== "chase") return;
-  const rect = chaseArea.getBoundingClientRect();
-  playerPosition = Math.max(3,Math.min(96,(event.clientX-rect.left)/rect.width*100));
-  updateChasePositions();
-  if (Math.abs(enemyPosition-playerPosition) < 9) startBattle();
+function movePlayer(event){
+ if(!dragging||gameScene!=="chase")return;
+ const rect=chaseArea.getBoundingClientRect();
+ playerPosition=Math.max(3,Math.min(96,(event.clientX-rect.left)/rect.width*100));
+ updateChasePositions();
+ if(Math.abs(enemyPosition-playerPosition)<9)startBattle();
 }
-chaseArea.addEventListener("pointerdown", event => {
-  dragging = true;
-  chaseArea.setPointerCapture(event.pointerId);
-  movePlayer(event);
+
+chaseArea.addEventListener("pointerdown",event=>{
+ dragging=true;
+ chaseArea.setPointerCapture(event.pointerId);
+ movePlayer(event);
 });
-chaseArea.addEventListener("pointermove", movePlayer);
-chaseArea.addEventListener("pointerup", () => dragging=false);
-chaseArea.addEventListener("pointercancel", () => dragging=false);
+chaseArea.addEventListener("pointermove",movePlayer);
+chaseArea.addEventListener("pointerup",()=>dragging=false);
+chaseArea.addEventListener("pointercancel",()=>dragging=false);
 
-function startBattle() {
-  if (gameScene !== "chase") return;
-  stopTimers();
-  gameScene = "battle";
-  enemyHp = stages[stage].hp;
-  lastEnemyAttack = Date.now();
-  $("battleStage").textContent = `STAGE ${stage+1} : ${stages[stage].name}`;
-  $("enemyName").textContent = stages[stage].name;
-  $("enemyFace").textContent = stages[stage].face;
-  $("message").textContent = "적을 공격하세요!";
-  updateStatus();
-  updateBars();
-  renderSkills();
-  showScreen("battleScreen");
-  markerPosition = 0;
-  markerDirection = 1;
-  gaugeTimer = setInterval(moveMarker, 18);
-  battleTimer = setInterval(enemyTurn, 1000);
+function startBattle(){
+ if(gameScene!=="chase")return;
+ stopTimers();
+ gameScene="battle";
+ enemyHp=stages[stage].hp;
+ lastEnemyAttack=Date.now();
+ $("battleStage").textContent=`STAGE ${stage+1} : ${stages[stage].name}`;
+ $("enemyName").textContent=stages[stage].name;
+ $("enemyFace").textContent=stages[stage].face;
+ $("message").textContent="적을 공격하세요!";
+ updateStatus();
+ updateBars();
+ renderSkills();
+ showScreen("battleScreen");
+ markerPosition=0;
+ markerDirection=1;
+ gaugeTimer=setInterval(moveMarker,16);
+ battleTimer=setInterval(enemyTurn,500);
+ cooldownTimer=setInterval(updateCooldowns,100);
 }
 
-function moveMarker() {
-  markerPosition += markerDirection * 0.85;
-  if (markerPosition >= 100) {
-    markerPosition = 100;
-    markerDirection = -1;
-  }
-  if (markerPosition <= 0) {
-    markerPosition = 0;
-    markerDirection = 1;
-  }
-  $("marker").style.left = markerPosition + "%";
+function moveMarker(){
+ markerPosition+=markerDirection*0.95;
+ if(markerPosition>=100){markerPosition=100;markerDirection=-1;}
+ if(markerPosition<=0){markerPosition=0;markerDirection=1;}
+ $("marker").style.left=markerPosition+"%";
 }
 
-function renderSkills() {
-  const box = $("skillButtons");
-  box.innerHTML = "";
-  skills.forEach((skill,index) => {
-    const unlocked = stage+1 >= skill.unlock;
-    const btn = document.createElement("button");
-    btn.textContent = unlocked ? skill.name : "🔒 잠김";
-    btn.disabled = !unlocked;
-    if (selectedSkill === index) btn.classList.add("selected");
-    btn.onclick = () => {
-      selectedSkill = index;
-      renderSkills();
-    };
-    box.appendChild(btn);
-  });
+function renderSkills(){
+ const box=$("skillButtons");
+ box.innerHTML="";
+ skills.forEach((skill,index)=>{
+  const unlocked=stage+1>=skill.unlock;
+  const remaining=Math.max(0,cooldowns[index]-Date.now());
+  const btn=document.createElement("button");
+  btn.className=selectedSkill===index?"selected":"";
+  if(remaining>0)btn.classList.add("cooling");
+  btn.disabled=!unlocked||remaining>0;
+  let cooldownText=remaining>0?(remaining/1000).toFixed(1)+"초 대기":"사용 가능";
+  btn.innerHTML=unlocked
+   ?`${skill.name}<span class="skill-info">피해 ${skill.damage} / 쿨타임 ${skill.cooldown/1000}초<br>${cooldownText}</span>`
+   :"🔒 잠김";
+  btn.onclick=()=>{
+   selectedSkill=index;
+   renderSkills();
+  };
+  box.appendChild(btn);
+ });
 }
 
-function attack() {
-  if (gameScene !== "battle") return;
-  const position = markerPosition;
-  let multiplier = 0.5;
-  let result = "MISS!";
-  if (position >= 81 && position <= 85) {
-    multiplier = 1.8;
-    result = "PERFECT!";
-  } else if ((position >= 75 && position < 81) ||
-             (position > 85 && position <= 91)) {
-    multiplier = 1.2;
-    result = "GOOD!";
-  }
-  const skill = skills[selectedSkill];
-  const damage = Math.round(skill.damage * multiplier);
-  enemyHp = Math.max(0,enemyHp-damage);
-  $("message").textContent = `${result} ${skill.name}! ${damage} 피해!`;
-  updateBars();
-  if (enemyHp <= 0) stageClear();
+function updateCooldowns(){
+ if(gameScene!=="battle")return;
+ renderSkills();
+ const remaining=Math.max(0,cooldowns[selectedSkill]-Date.now());
+ $("attackButton").disabled=remaining>0;
+ $("attackButton").textContent=remaining>0
+  ?`스킬 대기 중 (${(remaining/1000).toFixed(1)}초)`
+  :"공격!";
 }
 
-function enemyTurn() {
-  if (gameScene !== "battle") return;
-  if (Date.now()-lastEnemyAttack < 3000) return;
-  lastEnemyAttack = Date.now();
-  const damage = stages[stage].attack;
-  playerHp = Math.max(0,playerHp-damage);
-  $("message").textContent = `${stages[stage].name}의 반격! 체력 -${damage}`;
-  updateBars();
-  updateStatus();
-  if (playerHp <= 0) gameOver();
+function attack(){
+ if(gameScene!=="battle")return;
+ const skill=skills[selectedSkill];
+ if(stage+1<skill.unlock)return;
+
+ const now=Date.now();
+ if(now<cooldowns[selectedSkill]){
+  $("message").textContent="아직 스킬 쿨타임이 남았습니다!";
+  return;
+ }
+
+ cooldowns[selectedSkill]=now+skill.cooldown;
+
+ let multiplier=0.4;
+ let result="MISS!";
+
+ if(markerPosition>=81&&markerPosition<=85){
+  multiplier=1.5;
+  result="PERFECT!";
+ }else if(
+  (markerPosition>=75&&markerPosition<81)||
+  (markerPosition>85&&markerPosition<=91)
+ ){
+  multiplier=1.0;
+  result="GOOD!";
+ }
+
+ const damage=Math.round(skill.damage*multiplier);
+ enemyHp=Math.max(0,enemyHp-damage);
+ $("message").textContent=`${result} ${skill.name}! ${damage} 피해!`;
+ updateBars();
+ updateCooldowns();
+
+ if(enemyHp<=0)stageClear();
 }
 
-function updateBars() {
-  $("playerBar").style.width = playerHp + "%";
-  $("enemyBar").style.width = Math.max(0,enemyHp/stages[stage].hp*100) + "%";
-  $("battleHp").textContent = playerHp;
+function enemyTurn(){
+ if(gameScene!=="battle")return;
+ if(Date.now()-lastEnemyAttack<2500)return;
+ lastEnemyAttack=Date.now();
+
+ const damage=stages[stage].attack;
+ playerHp=Math.max(0,playerHp-damage);
+ $("message").textContent=`${stages[stage].name}의 반격! 체력 -${damage}`;
+ updateBars();
+ updateStatus();
+
+ if(playerHp<=0)gameOver();
 }
 
-function updateStatus() {
-  $("hpText").textContent = playerHp;
-  $("sojuText").textContent = soju;
-  $("battleHp").textContent = playerHp;
-  $("battleSoju").textContent = soju;
-  $("clearSoju").textContent = soju;
+function updateBars(){
+ $("playerBar").style.width=playerHp+"%";
+ $("enemyBar").style.width=Math.max(0,enemyHp/stages[stage].hp*100)+"%";
+ $("battleHp").textContent=playerHp;
 }
 
-function drinkSoju() {
-  if (!["chase","battle","clear"].includes(gameScene)) return;
-  if (soju <= 0) {
-    alert("소주가 없습니다!");
-    return;
-  }
-  if (playerHp >= 100) {
-    alert("체력이 이미 가득 찼습니다!");
-    return;
-  }
-  soju--;
-  playerHp = 100;
-  updateStatus();
-  updateBars();
-  if (gameScene === "chase") {
-    $("chaseMessage").textContent = "🍶 소주를 마시고 체력을 완전히 회복했습니다!";
-  } else if (gameScene === "battle") {
-    $("message").textContent = "🍶 소주 한 병! 체력 완전 회복!";
-  }
+function updateStatus(){
+ $("hpText").textContent=playerHp;
+ $("sojuText").textContent=soju;
+ $("battleHp").textContent=playerHp;
+ $("battleSoju").textContent=soju;
+ $("clearSoju").textContent=soju;
 }
 
-function stageClear() {
-  if (gameScene !== "battle") return;
-  stopTimers();
-  gameScene = "clear";
-  if (!clearRewardGiven) {
-    soju += 1;
-    clearRewardGiven = true;
-  }
-  $("clearTitle").textContent = `${stages[stage].name} 격파!`;
-  $("clearMessage").textContent =
-    stage === 0 ? "죽빵 스킬이 해금되었습니다!" :
-    stage === 1 ? "침뱉기와 음주욕설전화가 해금되었습니다!" :
-    stage === 2 ? "마지막 적 변발이 기다리고 있습니다!" :
-    "모든 스테이지를 정복했습니다!";
-  $("clearSoju").textContent = soju;
-  updateStatus();
-  showScreen("clearScreen");
+function drinkSoju(){
+ if(!["chase","battle","clear"].includes(gameScene))return;
+ if(soju<=0){alert("소주가 없습니다!");return;}
+ if(playerHp>=100){alert("체력이 이미 가득 찼습니다!");return;}
+
+ soju--;
+ playerHp=100;
+ updateStatus();
+ updateBars();
+
+ if(gameScene==="chase"){
+  $("chaseMessage").textContent="🍶 소주 한 병! 체력 완전 회복!";
+ }else if(gameScene==="battle"){
+  $("message").textContent="🍶 소주 한 병! 체력 완전 회복!";
+ }
 }
 
-function nextStage() {
-  stage++;
-  loadStage();
+function stageClear(){
+ if(gameScene!=="battle")return;
+ stopTimers();
+ gameScene="clear";
+
+ if(!clearRewardGiven){
+  soju+=1;
+  clearRewardGiven=true;
+ }
+
+ $("clearTitle").textContent=`${stages[stage].name} 격파!`;
+ $("clearMessage").textContent=
+  stage===0?"다음 상대는 군대후임입니다!":
+  stage===1?"다음 상대는 과거의 절친 김신입니다!":
+  stage===2?"다음 상대는 남수원의 대장 기린입니다!":
+  stage===3?"마지막 보스 변발이 기다리고 있습니다!":
+  "모든 보스를 물리쳤습니다!";
+ $("clearSoju").textContent=soju;
+ updateStatus();
+ showScreen("clearScreen");
 }
 
-function gameOver() {
-  stopTimers();
-  gameScene = "gameover";
-  showScreen("gameOverScreen");
+function nextStage(){
+ stage++;
+ cooldowns=[0,0,0,0];
+ loadStage();
+}
+
+function gameOver(){
+ stopTimers();
+ gameScene="gameover";
+ showScreen("gameOverScreen");
 }
 </script>
 </body>
